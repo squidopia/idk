@@ -1,1 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebird OS | Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root { --glass: rgba(255, 255, 255, 0.1); --blur: blur(15px); --accent: #00d4ff; }
+        body { 
+            margin: 0; font-family: 'Segoe UI', sans-serif; 
+            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            height: 100vh; overflow: hidden; color: white;
+        }
+        
+        /* Desktop Area */
+        .desktop { height: 92vh; padding: 20px; display: flex; flex-direction: column; flex-wrap: wrap; align-content: flex-start; }
+        .app-icon { 
+            width: 80px; text-align: center; margin: 15px; cursor: pointer; 
+            transition: transform 0.2s; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+        .app-icon:hover { transform: scale(1.1); }
+        .app-icon i { font-size: 45px; display: block; margin-bottom: 8px; color: var(--accent); }
 
+        /* Glass Windows */
+        .window { 
+            position: absolute; top: 10%; left: 15%; width: 70%; height: 70%;
+            background: var(--glass); backdrop-filter: var(--blur);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 15px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5); display: none; z-index: 10;
+        }
+        .title-bar { 
+            padding: 12px 20px; background: rgba(0,0,0,0.3); 
+            border-radius: 15px 15px 0 0; display: flex; justify-content: space-between; align-items: center;
+        }
+        .controls span { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-left: 8px; cursor: pointer; }
+        .close-btn { background: #ff5f56; } .min-btn { background: #ffbd2e; } .max-btn { background: #27c93f; }
+
+        /* Taskbar */
+        .taskbar { 
+            height: 8vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: center; position: fixed; bottom: 0; width: 100%;
+        }
+        .task-item { font-size: 24px; margin: 0 15px; color: white; opacity: 0.8; cursor: pointer; }
+
+        /* UI Elements */
+        .content-area { padding: 30px; height: calc(100% - 60px); overflow-y: auto; text-align: center; }
+        input, textarea { 
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); 
+            color: white; padding: 10px; border-radius: 8px; width: 80%; margin: 10px 0;
+        }
+        button { 
+            background: var(--accent); border: none; padding: 10px 20px; 
+            border-radius: 20px; color: #000; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        button:hover { opacity: 0.8; box-shadow: 0 0 15px var(--accent); }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="desktop">
+        <div class="app-icon" id="Files"><i class="fa fa-folder-open"></i><span>Explorer</span></div>
+        <div class="app-icon" id="text"><i class="fa fa-file-text"></i><span>Editor</span></div>
+        <div class="app-icon" id="Codeshome"><i class="fa fa-terminal"></i><span>Codes</span></div>
+        <div class="app-icon" id="music"><i class="fa fa-music"></i><span>Music</span></div>
+        <div class="app-icon" id="clock"><i class="fa fa-clock-o"></i><span>Timer</span></div>
+    </div>
+
+    <div id="window" class="window">
+        <div class="title-bar">
+            <div><i id="SideIcon" class="fa fa-rocket"></i> <span id="windowTitle">System</span></div>
+            <div class="controls">
+                <span class="min-btn"></span>
+                <span class="max-btn"></span>
+                <span id="Close" class="close-btn"></span>
+            </div>
+        </div>
+        
+        <div class="content-area">
+            <div id="ExplorerView" class="hidden">
+                <div id="FileViewArea">
+                    <h2 id="FileName">Files</h2>
+                    <i id="FileIcon" class="fa fa-file" style="font-size: 60px; color: var(--accent);"></i>
+                    <div id="FileContent" style="margin-top: 20px; font-style: italic;"></div>
+                    <img id="FileImage" style="max-width: 80%; border-radius: 10px; margin-top: 15px;" class="hidden">
+                    <p id="FileNumber">0/0</p>
+                    <div style="margin-top: 20px;">
+                        <button id="FileBackward">Prev</button>
+                        <button id="Refresh">Refresh</button>
+                        <button id="FileForward">Next</button>
+                    </div>
+                    <button id="DeleteFile" style="background:#ff5f56; margin-top: 10px;">Delete</button>
+                </div>
+            </div>
+
+            <div id="EditorView" class="hidden">
+                <input id="TextTitle" placeholder="Document Name">
+                <textarea id="TextData" rows="8" placeholder="Start typing..."></textarea><br>
+                <button id="SaveText">Save to Disk</button>
+            </div>
+
+            <div id="TimerView" class="hidden">
+                <h2>System Timer</h2>
+                <input type="number" id="timerinput" placeholder="Minutes">
+                <button id="Starttimer">Set Countdown</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        <i class="fa fa-windows task-item"></i>
+        <i class="fa fa-search task-item"></i>
+        <i class="fa fa-cog task-item"></i>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
