@@ -84,4 +84,4 @@ document.getElementById('Starttimer').onclick = () => {
     }, mins * 60000);
 };
 
-console.log("Firebird OS Premium Engine Loaded.");
+console.log("idk some engine thing loaded LOLLLLLLL");
